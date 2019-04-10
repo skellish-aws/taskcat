@@ -1,5 +1,5 @@
 ############################################################
-# taskcat Dockerfile
+# taskcat development Dockerfile
 # Based on Fedora
 ############################################################
 
@@ -7,10 +7,10 @@ FROM fedora:latest
 MAINTAINER "Tony Vattathil" tonynv@amazon.com
 
 # Version
-LABEL version=development 
+LABEL version=development
 
 # Operating Systems
-LABEL container-os: fedora
+LABEL container-os=fedora
 
 # Run as root
 USER root
@@ -18,15 +18,11 @@ USER root
 RUN dnf install git -y
 # Install taskcat (develop)
 RUN ln -s /usr/bin/python3 /usr/bin/python
-RUN pip3 install boto3 pyfiglet pyyaml tabulate yattag
-RUN pip3 install -i https://testpypi.python.org/pypi taskcat  --upgrade
+RUN pip3 install --upgrade pip
+RUN ln -s /usr/local/bin/pip /usr/bin/pip
+RUN pip install taskcat
+RUN pip install --index-url https://test.pypi.org/simple/ taskcat  --no-cache-dir --force --upgrade --no-deps
 
-ADD https://raw.githubusercontent.com/aws-quickstart/taskcat/develop/taskcat.py /usr/local/bin/taskcat
-ADD https://raw.githubusercontent.com/aws-quickstart/taskcat/develop/alchemist.py /usr/local/bin/alchemist
 
 # Set the work directory
 WORKDIR /mnt
-
-# Make taskcat executable
-RUN chmod 755 /usr/local/bin/taskcat
-RUN chmod 755 /usr/local/bin/alchemist
