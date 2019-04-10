@@ -1,8 +1,8 @@
---- 
-global: 
+---
+global:
   owner: tonynv@amazon.com
   qsname: sample-taskcat-project
-  regions: 
+  regions:
     - ap-northeast-1
     - ap-northeast-2
     - ap-southeast-1
@@ -13,11 +13,15 @@ global:
     - us-east-1
     - us-west-1
     - us-west-2
-  reporting: true
-tests: 
-  taskcat-test1: 
+tests:
+  taskcat-json:
     parameter_input: debug-input.json
-    regions: 
-      - us-east-1
     template_file: debug.template
+    regions:
+      - us-east-1
+  taskcat-yaml:
+    parameter_input: debug-input.json
+    template_file: debug-yaml.template
+    regions:
+      - us-east-1
 
